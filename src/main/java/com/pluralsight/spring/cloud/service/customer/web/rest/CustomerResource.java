@@ -1,6 +1,8 @@
 package com.pluralsight.spring.cloud.service.customer.web.rest;
 
 import com.pluralsight.spring.cloud.service.customer.web.rest.vm.CustomerView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,8 @@ import java.util.List;
 @RequestMapping("api/${app.api.version}/customers")
 public class CustomerResource {
 
+    private static final Logger log = LoggerFactory.getLogger(CustomerResource.class);
+
     @GetMapping("")
     ResponseEntity<List<CustomerView>> getAllCustomers() {
         return new ResponseEntity<>(
@@ -24,6 +28,7 @@ public class CustomerResource {
 
     @GetMapping("/{id}")
     ResponseEntity<CustomerView> getCustomerById(@PathVariable int id) {
+        log.info("Request for customer: " + id);
         return new ResponseEntity<>(
             new CustomerView(1, "Michael", "Hoffman"),HttpStatus.OK);
     }
